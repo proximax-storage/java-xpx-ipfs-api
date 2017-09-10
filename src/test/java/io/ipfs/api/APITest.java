@@ -188,9 +188,13 @@ public class APITest {
             if (!pinRm.get(0).equals(addResult.hash))
                 throw new IllegalStateException("Didn't remove file!");
             Object gc = ipfs.repo.gc();
+            
+            System.out.println(addResult.hash);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        
+        
     }
 
     @Test

@@ -2,6 +2,9 @@
 *.log
 dist/*
 target/
+.classpath
+.project
+.settings/*
 dependency-reduced-pom.xml
 TEST-io.ipfs.api.APITest.*
 
