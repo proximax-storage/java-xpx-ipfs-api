@@ -14,7 +14,7 @@ import java.util.stream.*;
 
 public class IPFS {
 
-    public static final Version MIN_VERSION = Version.parse("0.4.10");
+    public static final Version MIN_VERSION = Version.parse("0.4.11");
     public enum PinType {all, direct, indirect, recursive}
     public List<String> ObjectTemplates = Arrays.asList("unixfs-dir");
     public List<String> ObjectPatchTypes = Arrays.asList("add-link", "rm-link", "set-data", "append-data");
@@ -66,18 +66,16 @@ public class IPFS {
         }
     }
 
-    public MerkleNode add(NamedStreamable file) throws IOException {
-        List<MerkleNode> addParts = add(Collections.singletonList(file));
-        Optional<MerkleNode> sameName = addParts.stream()
-                .filter(node -> node.name.equals(file.getName()))
-                .findAny();
-        if (sameName.isPresent())
-            return sameName.get();
-        return addParts.get(0);
+    public List<MerkleNode> add(NamedStreamable file) throws IOException {
+        return add(file, false);
     }
 
-    public List<MerkleNode> add(List<NamedStreamable> files) throws IOException {
-        Multipart m = new Multipart("http://" + host + ":" + port + version + "add", "UTF-8");
+    public List<MerkleNode> add(NamedStreamable file, boolean wrap) throws IOException {
+        return add(Collections.singletonList(file), wrap);
+    }
+
+    public List<MerkleNode> add(List<NamedStreamable> files, boolean wrap) throws IOException {
+        Multipart m = new Multipart("http://" + host + ":" + port + version + "add?w="+wrap, "UTF-8");
         for (NamedStreamable file: files) {
             if (file.isDirectory()) {
                 m.addSubtree(Paths.get(""), file);
@@ -234,7 +232,7 @@ public class IPFS {
         }
 
         public Object pub(String topic, String data) throws IOException {
-            return retrieveAndParse("pubsub/peers?arg="+topic + "&arg=" + data);
+            return retrieveAndParse("pubsub/pub?arg="+topic + "&arg=" + data);
         }
 
         public Supplier<Object> sub(String topic) throws IOException {
