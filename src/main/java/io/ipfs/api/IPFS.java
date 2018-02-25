@@ -89,11 +89,15 @@ public class IPFS {
     }
 
     public List<MerkleNode> add(NamedStreamable file, boolean wrap) throws IOException {
-        return add(Collections.singletonList(file), wrap);
+        return add(file, wrap, false);
     }
 
-    public List<MerkleNode> add(List<NamedStreamable> files, boolean wrap) throws IOException {
-        Multipart m = new Multipart("http://" + host + ":" + port + version + "add?w="+wrap, "UTF-8");
+    public List<MerkleNode> add(NamedStreamable file, boolean wrap, boolean hashOnly) throws IOException {
+        return add(Collections.singletonList(file), wrap, hashOnly);
+    }
+
+    public List<MerkleNode> add(List<NamedStreamable> files, boolean wrap, boolean hashOnly) throws IOException {
+        Multipart m = new Multipart("http://" + host + ":" + port + version + "add?w="+wrap + "&n="+hashOnly, "UTF-8");
         for (NamedStreamable file: files) {
             if (file.isDirectory()) {
                 m.addSubtree(Paths.get(""), file);
@@ -246,20 +250,40 @@ public class IPFS {
         }
 
         public Object peers(String topic) throws IOException {
-            return retrieveAndParse("pubsub/peers?topic="+topic);
+            return retrieveAndParse("pubsub/peers?arg="+topic);
         }
 
+        /**
+         *
+         * @param topic
+         * @param data url encoded data to be published
+         * @return
+         * @throws IOException
+         */
         public Object pub(String topic, String data) throws IOException {
             return retrieveAndParse("pubsub/pub?arg="+topic + "&arg=" + data);
         }
 
-        public Supplier<Object> sub(String topic) throws IOException {
+        public Supplier<Map<String, Object>> sub(String topic) throws IOException {
             return sub(topic, ForkJoinPool.commonPool());
         }
 
-        public Supplier<Object> sub(String topic, ForkJoinPool threadSupplier) throws IOException {
-            return retrieveAndParseStream("pubsub/sub?arg="+topic, threadSupplier);
+        public Supplier<Map<String, Object>> sub(String topic, ForkJoinPool threadSupplier) throws IOException {
+            Supplier<Object> sup = retrieveAndParseStream("pubsub/sub?arg=" + topic, threadSupplier);
+            return () -> (Map) sup.get();
         }
+
+        /**
+         * A synchronous method to subscribe which consumes the calling thread
+         * @param topic
+         * @param results
+         * @throws IOException
+         */
+        public void sub(String topic, Consumer<Map<String, Object>> results) throws IOException {
+            retrieveAndParseStream("pubsub/sub?arg="+topic, res -> results.accept((Map)res));
+        }
+
+
     }
 
     /* 'ipfs block' is a plumbing command used to manipulate raw ipfs blocks.
@@ -394,8 +418,8 @@ public class IPFS {
             return retrieveMap("dht/query?arg=" + addr.toString());
         }
 
-        public Map findpeer(MultiAddress addr) throws IOException {
-            return retrieveMap("dht/findpeer?arg=" + addr.toString());
+        public Map findpeer(Multihash id) throws IOException {
+            return retrieveMap("dht/findpeer?arg=" + id.toString());
         }
 
         public Map get(Multihash hash) throws IOException {
@@ -508,6 +532,10 @@ public class IPFS {
         return retrieveMap("id/" + target.toString());
     }
 
+    public Map id() throws IOException {
+        return retrieveMap("id");
+    }
+
     public class Stats {
         public Map bw() throws IOException {
             return retrieveMap("stats/bw");
@@ -582,6 +610,16 @@ public class IPFS {
                 throw new RuntimeException(e);
             }
         };
+    }
+
+    /**
+     * A synchronous stream retriever that consumes the calling thread
+     * @param path
+     * @param results
+     * @throws IOException
+     */
+    private void retrieveAndParseStream(String path, Consumer<Object> results) throws IOException {
+        getObjectStream(path, d -> results.accept(JSONParser.parse(new String(d))));
     }
 
     private byte[] retrieve(String path) throws IOException {
