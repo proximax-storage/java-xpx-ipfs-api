@@ -11,23 +11,23 @@
 	<url>https://github.com/ipfs/java-ipfs-api</url>
 
 	<issueManagement>
- 		<url>https://github.com/ipfs/java-ipfs-api/issues</url>
- 		<system>GitHub Issues</system>
- 	</issueManagement>
+		<url>https://github.com/ipfs/java-ipfs-api/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
- 	<scm>
- 		<url>https://github.com/ipfs/java-ipfs-api</url>
- 		<connection>scm:git:git://github.com/ipfs/java-ipfs-api.git</connection>
- 		<developerConnection>scm:git:git@github.com:ipfs/java-ipfs-api.git</developerConnection>
- 	</scm>
+	<scm>
+		<url>https://github.com/ipfs/java-ipfs-api</url>
+		<connection>scm:git:git://github.com/ipfs/java-ipfs-api.git</connection>
+		<developerConnection>scm:git:git@github.com:ipfs/java-ipfs-api.git</developerConnection>
+	</scm>
 
- 	<licenses>
- 		<license>
- 			<name>MIT License</name>
- 			<url>https://github.com/ipfs/java-ipfs-api/blob/master/LICENSE</url>
- 			<distribution>repo</distribution>
- 		</license>
- 	</licenses>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/ipfs/java-ipfs-api/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

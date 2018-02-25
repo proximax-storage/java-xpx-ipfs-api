@@ -19,7 +19,16 @@ public class APITest {
     private final IPFS ipfs = new IPFS(new MultiAddress("/ip4/127.0.0.1/tcp/5001"));
 
     @Test
+    public void s() {
+    	//QmWZ4JgHxWRDq148uimeQqxmGxnZdjbLuxbx7b2J543oPJ
+
+    }
+    
+    @Test
     public void dag() throws IOException {
+    	
+    	
+    	
         byte[] object = "{\"data\":1234}".getBytes();
         MerkleNode put = ipfs.dag.put("json", object);
 
@@ -103,7 +112,7 @@ public class APITest {
 
     @Test
     public void dirTest() throws IOException {
-        NamedStreamable.DirWrapper dir = new NamedStreamable.DirWrapper("root", Arrays.asList());
+        NamedStreamable.DirWrapper dir = new NamedStreamable.DirWrapper("C:\\Apps\\7VDFT\\", Arrays.asList());
         MerkleNode addResult = ipfs.add(dir).get(0);
         List<MerkleNode> ls = ipfs.ls(addResult.hash);
         Assert.assertTrue(ls.size() > 0);
@@ -125,7 +134,7 @@ public class APITest {
 
         String subdirName = "subdir";
         tmpDir.resolve(subdirName).toFile().mkdir();
-
+        
         String subfileName = "subdirfile" + rnd.nextInt(100);
         Path subdirfile = tmpDir.resolve(subdirName + "/" + subfileName);
         FileOutputStream fout2 = new FileOutputStream(subdirfile.toFile());
@@ -423,6 +432,7 @@ public class APITest {
 
     @Test
     public void pubsub() throws IOException {
+    	
         Object ls = ipfs.pubsub.ls();
         Object peers = ipfs.pubsub.peers();
         String topic = "topic" + System.nanoTime();
@@ -454,7 +464,7 @@ public class APITest {
             CborObject.CborByteArray target = new CborObject.CborByteArray(("g'day IPFS!").getBytes());
             byte[] rawTarget = target.toByteArray();
             MerkleNode targetRes = ipfs.block.put(Arrays.asList(rawTarget), Optional.of("cbor")).get(0);
-
+            
             CborObject.CborMerkleLink link = new CborObject.CborMerkleLink(targetRes.hash);
             Map<String, CborObject> m = new TreeMap<>();
             m.put("alink", link);

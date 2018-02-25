@@ -25,7 +25,7 @@ public class IPFS {
     public final Key key = new Key();
     public final Pin pin = new Pin();
     public final Repo repo = new Repo();
-    public final IPFSObject object = new IPFSObject();
+    public final IPFSObject object = new IPFSObject();	
     public final Swarm swarm = new Swarm();
     public final Bootstrap bootstrap = new Bootstrap();
     public final Block block = new Block();
@@ -66,6 +66,24 @@ public class IPFS {
         }
     }
 
+	public List<MerkleNode> getHashOnly(NamedStreamable file) throws IOException {
+    	return getHashOnly(Collections.singletonList(file));
+    }
+    
+    public List<MerkleNode> getHashOnly(List<NamedStreamable> files) throws IOException {
+    	Multipart m = new Multipart("http://" + host + ":" + port + version + "add?only-hash=true", "UTF-8");
+        for (NamedStreamable file: files) {
+            if (file.isDirectory()) {
+                m.addSubtree(Paths.get(""), file);
+            } else
+                m.addFilePart("file", Paths.get(""), file);
+        };
+        String res = m.finish();
+        return JSONParser.parseStream(res).stream()
+                .map(x -> MerkleNode.fromJSON((Map<String, Object>) x))
+                .collect(Collectors.toList());
+    }
+    
     public List<MerkleNode> add(NamedStreamable file) throws IOException {
         return add(file, false);
     }
@@ -572,6 +590,7 @@ public class IPFS {
     }
 
     private static byte[] get(URL target) throws IOException {
+    	System.out.println(target);
         HttpURLConnection conn = (HttpURLConnection) target.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-Type", "application/json");
