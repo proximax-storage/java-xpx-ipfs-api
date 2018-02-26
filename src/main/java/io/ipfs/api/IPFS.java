@@ -459,6 +459,10 @@ public class IPFS {
         public List<MultiAddress> rm(MultiAddress addr, boolean all) throws IOException {
             return ((List<String>)retrieveMap("bootstrap/rm?"+(all ? "all=true&":"")+"arg="+addr).get("Peers")).stream().map(x -> new MultiAddress(x)).collect(Collectors.toList());
         }
+        
+        public List<MultiAddress> rm(boolean all) throws IOException {
+            return ((List<String>)retrieveMap("bootstrap/rm?"+(all ? "all=true&":"")).get("Peers")).stream().map(x -> new MultiAddress(x)).collect(Collectors.toList());
+        }
     }
 
     /*  ipfs swarm is a tool to manipulate the network swarm. The swarm is the
