@@ -3,7 +3,7 @@
 
 	<groupId>io.ipfs</groupId>
 	<artifactId>api</artifactId>
-	<version>v1.2.0-proximax</version>
+	<version>v1.2.1-proximax-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>java-ipfs-api</name>
