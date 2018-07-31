@@ -9,6 +9,9 @@
 
 > A Java implementation of the IPFS http api
 
+## ProximaX Forked Version
+This is a forked version of IPFS [java-ipfs-api](https://github.com/ipfs/java-ipfs-api) project
+
 ## Table of Contents
 
 - [Install](#install)
