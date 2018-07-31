@@ -58,17 +58,17 @@
 		<dependency>
 			<groupId>com.github.multiformats</groupId>
 			<artifactId>java-multiaddr</artifactId>
-			<version>v1.1.1-ipfs</version>
+			<version>v1.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.multiformats</groupId>
 			<artifactId>java-multihash</artifactId>
-			<version>v1.1.1-ipfs</version>
+			<version>v1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.multiformats</groupId>
 			<artifactId>java-multibase</artifactId>
-			<version>v1.1.0-ipfs</version>
+			<version>v1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.ipld</groupId>

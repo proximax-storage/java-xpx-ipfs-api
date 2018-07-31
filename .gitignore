@@ -10,5 +10,5 @@ TEST-io.ipfs.api.APITest.*
 
 # Scala-IDE specific
 .idea/*
-api.iml
+*.iml
 
