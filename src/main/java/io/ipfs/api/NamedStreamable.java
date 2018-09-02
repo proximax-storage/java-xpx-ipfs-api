@@ -1,9 +1,18 @@
 package io.ipfs.api;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public interface NamedStreamable
 {
@@ -123,4 +132,43 @@ public interface NamedStreamable
             return true;
         }
     }
+
+    class InputStreamWrapper implements NamedStreamable {
+        private final Optional<String> name;
+        private final InputStream inputStream;
+
+        public InputStreamWrapper(InputStream inputStream) {
+            this(Optional.empty(), inputStream);
+        }
+
+        public InputStreamWrapper(String name, InputStream inputStream) {
+            this(Optional.of(name), inputStream);
+        }
+
+        public InputStreamWrapper(Optional<String> name, InputStream inputStream) {
+            this.name = name;
+            this.inputStream = inputStream;
+        }
+
+        @Override
+        public boolean isDirectory() {
+            return false;
+        }
+
+        @Override
+        public InputStream getInputStream() {
+            return inputStream;
+        }
+
+        @Override
+        public List<NamedStreamable> getChildren() {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public Optional<String> getName() {
+            return this.name;
+        }
+    }
+
 }
