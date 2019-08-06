@@ -71,6 +71,7 @@ task javadocJar(type: Jar) {
 
 // adjust main jar file
 jar {
+    classifier = 'base'
     // include files with project info
     from (rootDir) {
         include 'LICENSE'
@@ -91,6 +92,10 @@ jar {
             'Bundle-License'       : 'https://github.com/proximax-storage/java-xpx-ipfs-api/blob/master/LICENSE'
         )
     }
+}
+
+shadowJar {
+	classifier = null
 }
 
 // add sources and javadoc to release artifacts
