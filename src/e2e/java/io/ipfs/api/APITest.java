@@ -1,19 +1,32 @@
 package io.ipfs.api;
 
-import io.ipfs.api.cbor.*;
-import io.ipfs.cid.*;
-import io.ipfs.multihash.Multihash;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+
+import io.ipfs.api.cbor.CborObject;
+import io.ipfs.cid.Cid;
 import io.ipfs.multiaddr.MultiAddress;
-import org.junit.*;
-
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.stream.*;
-
-import static org.junit.Assert.assertTrue;
+import io.ipfs.multihash.Multihash;
 
 public class APITest {
 
@@ -28,10 +41,10 @@ public class APITest {
         Cid expected = Cid.decode("zdpuB2CbdLrUK5AgZusm4hraisDDDC135ugdmZWvMHhhsSYTb");
 
         Multihash result = put.hash;
-        Assert.assertTrue("Correct cid returned", result.equals(expected));
+        assertTrue(result.equals(expected), "Correct cid returned");
 
         byte[] get = ipfs.dag.get(expected);
-        Assert.assertTrue("Raw data equal", Arrays.equals(object, get));
+        assertTrue(Arrays.equals(object, get), "Raw data equal");
     }
 
     @Test
@@ -46,10 +59,10 @@ public class APITest {
 
         byte[] get = ipfs.dag.get(cid);
         CborObject cborObject = CborObject.fromByteArray(get);
-        Assert.assertTrue("Raw data equal", Arrays.equals(object, get));
+        assertTrue(Arrays.equals(object, get), "Raw data equal");
 
         Cid expected = Cid.decode("zdpuB2RwxeC5eC7oxiyzzhuZwAPd26YNRxXHvcTvgm4MbXwsC");
-        Assert.assertTrue("Correct cid returned", cid.equals(expected));
+        assertTrue(cid.equals(expected), "Correct cid returned");
     }
 
     @Test
@@ -61,7 +74,7 @@ public class APITest {
         Object rename = ipfs.key.rename(name, newName);
         List<KeyInfo> rm = ipfs.key.rm(newName);
         List<KeyInfo> remaining = ipfs.key.list();
-        Assert.assertTrue("removed key", remaining.equals(existing));
+        assertTrue(remaining.equals(existing), "removed key");
     }
 
     @Test
@@ -74,7 +87,7 @@ public class APITest {
 
         IpldNode.CborIpldNode node = new IpldNode.CborIpldNode(cbor);
         List<String> tree = node.tree("", -1);
-        Assert.assertTrue("Correct tree", tree.equals(Arrays.asList("/a/b", "/c")));
+        assertTrue(tree.equals(Arrays.asList("/a/b", "/c")), "Correct tree");
     }
 
     @Test
@@ -104,7 +117,7 @@ public class APITest {
         NamedStreamable.DirWrapper dir = new NamedStreamable.DirWrapper("root", Arrays.asList());
         MerkleNode addResult = ipfs.add(dir).get(0);
         List<MerkleNode> ls = ipfs.ls(addResult.hash);
-        Assert.assertTrue(ls.size() > 0);
+        assertTrue(ls.size() > 0);
     }
 
     @Test
@@ -230,7 +243,7 @@ public class APITest {
         // object should still be present after gc
         Map<Multihash, Object> ls2 = ipfs.pin.ls(IPFS.PinType.recursive);
         boolean stillPinned = ls2.containsKey(hash);
-        Assert.assertTrue("Pinning works", pinned && stillPinned);
+        assertTrue(pinned && stillPinned, "Pinning works");
     }
 
     @Test
@@ -264,7 +277,7 @@ public class APITest {
     public void rawLeafNodePinUpdate() throws IOException {
         MerkleNode child1 = ipfs.block.put("some data".getBytes(), Optional.of("raw"));
         Multihash hashChild1 = child1.hash;
-        System.out.println("child1: " + hashChild1.type);
+        System.out.println("child1: " + hashChild1.getType());
 
         CborObject.CborMerkleLink root1 = new CborObject.CborMerkleLink(hashChild1);
         MerkleNode root1Res = ipfs.block.put(Collections.singletonList(root1.toByteArray()), Optional.of("cbor")).get(0);
@@ -403,7 +416,7 @@ public class APITest {
             }
         }
         long duration = System.currentTimeMillis() - start;
-        Assert.assertTrue("Fast synchronous pub-sub", duration < 1000);
+        assertTrue(duration < 1000, "Fast synchronous pub-sub");
     }
 
     @Test
@@ -415,7 +428,7 @@ public class APITest {
         Object pub = ipfs.pubsub.pub(topic, data);
         Object pub2 = ipfs.pubsub.pub(topic, "G'day");
         List<Map> results = sub.limit(2).collect(Collectors.toList());
-        Assert.assertTrue( ! results.get(0).equals(Collections.emptyMap()));
+        assertTrue( ! results.get(0).equals(Collections.emptyMap()));
     }
 
     private static String toEscapedHex(byte[] in) throws IOException {
@@ -452,10 +465,10 @@ public class APITest {
         ipfs.repo.gc();
 
         List<Multihash> refs = ipfs.refs(sourceRes.hash, true);
-        Assert.assertTrue("refs returns links", refs.contains(targetRes.hash));
+        assertTrue(refs.contains(targetRes.hash), "refs returns links");
 
         byte[] bytes = ipfs.block.get(targetRes.hash);
-        Assert.assertTrue("same contents after GC", Arrays.equals(bytes, rawTarget));
+        assertTrue(Arrays.equals(bytes, rawTarget), "same contents after GC");
         // These commands can be used to reproduce this on the command line
         String reproCommand1 = "printf \"" + toEscapedHex(rawTarget) + "\" | ipfs block put --format=cbor";
         String reproCommand2 = "printf \"" + toEscapedHex(rawSource) + "\" | ipfs block put --format=cbor";
@@ -486,14 +499,14 @@ public class APITest {
 
         List<Multihash> refs = ipfs.refs(rootRes.hash, false);
         boolean correct = refs.contains(sourceRes.hash) && refs.contains(leaf2Res.hash) && refs.size() == 2;
-        Assert.assertTrue("refs returns links", correct);
+        assertTrue(correct, "refs returns links");
 
         List<Multihash> refsRecurse = ipfs.refs(rootRes.hash, true);
         boolean correctRecurse = refs.contains(sourceRes.hash)
                 && refs.contains(leaf1Res.hash)
                 && refs.contains(leaf2Res.hash)
                 && refs.size() == 3;
-        Assert.assertTrue("refs returns links", correct);
+        assertTrue(correct, "refs returns links");
     }
 
     /**
@@ -507,20 +520,20 @@ public class APITest {
         MerkleNode block1 = ipfs.block.put(Arrays.asList(rawTarget), Optional.of("cbor")).get(0);
         Multihash block1Hash = block1.hash;
         byte[] retrievedObj1 = ipfs.block.get(block1Hash);
-        Assert.assertTrue("get inverse of put", Arrays.equals(retrievedObj1, rawTarget));
+        assertTrue(Arrays.equals(retrievedObj1, rawTarget), "get inverse of put");
 
         CborObject.CborMerkleLink cbor2 = new CborObject.CborMerkleLink(block1.hash);
         byte[] obj2 = cbor2.toByteArray();
         MerkleNode block2 = ipfs.block.put(Arrays.asList(obj2), Optional.of("cbor")).get(0);
         byte[] retrievedObj2 = ipfs.block.get(block2.hash);
-        Assert.assertTrue("get inverse of put", Arrays.equals(retrievedObj2, obj2));
+        assertTrue(Arrays.equals(retrievedObj2, obj2), "get inverse of put");
 
         List<Multihash> add = ipfs.pin.add(block2.hash);
         ipfs.repo.gc();
         ipfs.repo.gc();
 
         byte[] bytes = ipfs.block.get(block1.hash);
-        Assert.assertTrue("same contents after GC", Arrays.equals(bytes, rawTarget));
+        assertTrue(Arrays.equals(bytes, rawTarget), "same contents after GC");
         // These commands can be used to reproduce this on the command line
         String reproCommand1 = "printf \"" + toEscapedHex(rawTarget) + "\" | ipfs block put --format=cbor";
         String reproCommand2 = "printf \"" + toEscapedHex(obj2) + "\" | ipfs block put --format=cbor";
@@ -536,7 +549,7 @@ public class APITest {
         byte[] obj = cbor.toByteArray();
         MerkleNode block = ipfs.block.put(Arrays.asList(obj), Optional.of("cbor")).get(0);
         byte[] retrievedObj = ipfs.block.get(block.hash);
-        Assert.assertTrue("get inverse of put", Arrays.equals(retrievedObj, obj));
+        assertTrue(Arrays.equals(retrievedObj, obj), "get inverse of put");
 
         List<Multihash> add = ipfs.pin.add(block.hash);
         ipfs.repo.gc();
@@ -567,7 +580,7 @@ public class APITest {
         ipfs.repo.gc();
 
         byte[] bytes = ipfs.block.get(targetRes.hash);
-        Assert.assertTrue("same contents after GC", Arrays.equals(bytes, rawTarget));
+        assertTrue(Arrays.equals(bytes, rawTarget), "same contents after GC");
         // These commands can be used to reproduce this on the command line
         String reproCommand1 = "printf \"" + toEscapedHex(rawTarget) + "\" | ipfs block put --format=cbor";
         String reproCommand2 = "printf \"" + toEscapedHex(rawSource) + "\" | ipfs block put --format=cbor";

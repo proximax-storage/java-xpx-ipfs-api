@@ -1,9 +1,13 @@
 package io.ipfs.api;
 
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Test;
 
 public class Versions {
 
@@ -14,6 +18,6 @@ public class Versions {
         Collections.sort(versions);
         List<String> sorted = versions.stream().map(Object::toString).collect(Collectors.toList());
         List<String> correct = Arrays.asList("0.4.9", "0.4.10", "0.5.1-rc1", "0.5.1-rc2", "0.5.1-rc2+meta", "1.0.3");
-        Assert.assertTrue("Correct version sorting", sorted.equals(correct));
+        assertTrue(sorted.equals(correct), "Correct version sorting");
     }
 }

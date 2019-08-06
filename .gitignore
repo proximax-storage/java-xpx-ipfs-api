@@ -4,7 +4,6 @@ dist/*
 target/
 .classpath
 .project
-.settings/*
 dependency-reduced-pom.xml
 TEST-io.ipfs.api.APITest.*
 
@@ -12,3 +11,7 @@ TEST-io.ipfs.api.APITest.*
 .idea/*
 *.iml
 
+/.gradle/
+/build/
+/.settings/
+/bin/
