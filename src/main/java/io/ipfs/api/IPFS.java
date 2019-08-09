@@ -1,16 +1,30 @@
 package io.ipfs.api;
 
-import io.ipfs.cid.*;
-import io.ipfs.multihash.Multihash;
-import io.ipfs.multiaddr.MultiAddress;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import java.io.*;
-import java.net.*;
-import java.nio.file.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.stream.*;
+import io.ipfs.cid.Cid;
+import io.ipfs.multiaddr.MultiAddress;
+import io.ipfs.multihash.Multihash;
 
 public class IPFS {
 
@@ -235,13 +249,6 @@ public class IPFS {
             return retrieveAndParse("pubsub/peers?arg="+topic);
         }
 
-        /**
-         *
-         * @param topic
-         * @param data url encoded data to be published
-         * @return
-         * @throws IOException
-         */
         public Object pub(String topic, String data) throws Exception {
             return retrieveAndParse("pubsub/pub?arg="+topic + "&arg=" + data);
         }

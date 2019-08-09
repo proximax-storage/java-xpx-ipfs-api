@@ -38,19 +38,19 @@ public interface CborConstants {
     /** Denotes a eight-byte value (uint64). */
     int EIGHT_BYTES = 0x1b;
 
-    /** The CBOR-encoded boolean <code>false</code> value (encoded as "simple value": {@link #MT_SIMPLE}). */
+    /** The CBOR-encoded boolean <code>false</code> value (encoded as "simple value"). */
     int FALSE = 0x14;
-    /** The CBOR-encoded boolean <code>true</code> value (encoded as "simple value": {@link #MT_SIMPLE}). */
+    /** The CBOR-encoded boolean <code>true</code> value (encoded as "simple value"). */
     int TRUE = 0x15;
-    /** The CBOR-encoded <code>null</code> value (encoded as "simple value": {@link #MT_SIMPLE}). */
+    /** The CBOR-encoded <code>null</code> value (encoded as "simple value"). */
     int NULL = 0x16;
-    /** The CBOR-encoded "undefined" value (encoded as "simple value": {@link #MT_SIMPLE}). */
+    /** The CBOR-encoded "undefined" value (encoded as "simple value"). */
     int UNDEFINED = 0x17;
-    /** Denotes a half-precision float (two-byte IEEE 754, see {@link #MT_FLOAT}). */
+    /** Denotes a half-precision float (two-byte IEEE 754). */
     int HALF_PRECISION_FLOAT = 0x19;
-    /** Denotes a single-precision float (four-byte IEEE 754, see {@link #MT_FLOAT}). */
+    /** Denotes a single-precision float (four-byte IEEE 754). */
     int SINGLE_PRECISION_FLOAT = 0x1a;
-    /** Denotes a double-precision float (eight-byte IEEE 754, see {@link #MT_FLOAT}). */
+    /** Denotes a double-precision float (eight-byte IEEE 754). */
     int DOUBLE_PRECISION_FLOAT = 0x1b;
     /** The CBOR-encoded "break" stop code for unlimited arrays/maps. */
     int BREAK = 0x1f;
