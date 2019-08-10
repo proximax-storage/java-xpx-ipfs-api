@@ -32,8 +32,8 @@ publishing {
                 }
             }
             pom {
-                name = 'ProximaX Sirius Blockchain Java SDK'
-                description = 'The ProximaX Sirius Chain Java SDK is a Java library for interacting with the Sirius Blockchain.'
+                name = 'ProximaX IPFS Java API'
+                description = 'The ProximaX IPFS Java API is a Java library for interacting IPFS server.'
                 url = 'https://github.com/proximax-storage/java-xpx-ipfs-api'
                 organization {
                     name = 'ProximaX'
