@@ -36,7 +36,7 @@ task sourcesJar(type: Jar) {
             'Created-By'           : "Gradle ${gradle.gradleVersion}",
             'Build-Jdk'            : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
             'Build-OS'             : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
-            'Specification-Title'  : 'ProximaX Sirius Blockchain Java SDK',
+            'Specification-Title'  : 'ProximaX IPFS Java API',
             'Implementation-Vendor': 'ProximaX',
             'Bundle-License'       : 'https://github.com/proximax-storage/java-xpx-ipfs-api/blob/master/LICENSE'
         )
@@ -62,7 +62,7 @@ task javadocJar(type: Jar) {
             'Created-By'           : "Gradle ${gradle.gradleVersion}",
             'Build-Jdk'            : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
             'Build-OS'             : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
-            'Specification-Title'  : 'ProximaX Sirius Blockchain Java SDK',
+            'Specification-Title'  : 'ProximaX IPFS Java API',
             'Implementation-Vendor': 'ProximaX',
             'Bundle-License'       : 'https://github.com/proximax-storage/java-xpx-ipfs-api/blob/master/LICENSE'
         )
@@ -87,7 +87,7 @@ jar {
             'Created-By'           : "Gradle ${gradle.gradleVersion}",
             'Build-Jdk'            : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
             'Build-OS'             : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
-            'Specification-Title'  : 'ProximaX Sirius Blockchain Java SDK',
+            'Specification-Title'  : 'ProximaX IPFS Java API',
             'Implementation-Vendor': 'ProximaX',
             'Bundle-License'       : 'https://github.com/proximax-storage/java-xpx-ipfs-api/blob/master/LICENSE'
         )
