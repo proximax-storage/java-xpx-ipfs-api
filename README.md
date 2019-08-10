@@ -1,8 +1,5 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![star this repo](http://githubbadges.com/star.svg?user=proximax-storage&repo=java-xpx-ipfs-sdk&style=flat)](https://github.com/proximax-storage/java-xpx-ipfs-sdk)
-[![fork this repo](http://githubbadges.com/fork.svg?user=proximax-storage&repo=java-xpx-ipfs-sdk&style=flat)](https://github.com/proximax-storage/java-xpx-ipfs-sdk/fork)
-[![Coverage Status](https://coveralls.io/repos/github/proximax-storage/java-xpx-ipfs-sdk/badge.svg?branch=master)](https://coveralls.io/github/proximax-storage/java-xpx-ipfs-sdk?branch=master)
-[![Build Status](https://travis-ci.com/proximax-storage/java-xpx-ipfs-sdk.svg?branch=master)](https://travis-ci.com/proximax-storage/java-xpx-ipfs-sdk)
+[![Coverage Status](https://coveralls.io/repos/github/proximax-storage/java-xpx-ipfs-api/badge.svg?branch=master)](https://coveralls.io/github/proximax-storage/java-xpx-ipfs-api?branch=master)
+[![Build Status](https://travis-ci.com/proximax-storage/java-xpx-ipfs-api.svg?branch=master)](https://travis-ci.com/proximax-storage/java-xpx-ipfs-api)
 
 # ProximaX IPFS Java API #
 
