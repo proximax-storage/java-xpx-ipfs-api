@@ -1,11 +1,10 @@
-# java-ipfs-api
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![star this repo](http://githubbadges.com/star.svg?user=proximax-storage&repo=java-xpx-ipfs-sdk&style=flat)](https://github.com/proximax-storage/java-xpx-ipfs-sdk)
+[![fork this repo](http://githubbadges.com/fork.svg?user=proximax-storage&repo=java-xpx-ipfs-sdk&style=flat)](https://github.com/proximax-storage/java-xpx-ipfs-sdk/fork)
+[![Coverage Status](https://coveralls.io/repos/github/proximax-storage/java-xpx-ipfs-sdk/badge.svg?branch=master)](https://coveralls.io/github/proximax-storage/java-xpx-ipfs-sdk?branch=master)
+[![Build Status](https://travis-ci.com/proximax-storage/java-xpx-ipfs-sdk.svg?branch=master)](https://travis-ci.com/proximax-storage/java-xpx-ipfs-sdk)
 
-[![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
-[![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://ipfs.io/)
-[![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-
-![](https://ipfs.io/ipfs/QmQJ68PFMDdAsgCZvA1UVzzn18asVcf7HVvCDgpjiSCAse)
+# ProximaX IPFS Java API #
 
 > A Java implementation of the IPFS http api
 
