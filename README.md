@@ -12,6 +12,8 @@ This is a forked version of IPFS [java-ipfs-http-client](https://github.com/ipfs
 This is transitive dependency and is not primarily intended for direct use. 
 Project [java-chain-xipfs-sdk](https://github.com/proximax-storage/java-chain-xipfs-sdk) should be used as P2P SDK.
 
+[JavaDoc](https://proximax-storage.github.io/java-xpx-ipfs-api/javadoc/) is available online.
+
 ## License
 
 Project is licensed under MIT License. See [LICENSE](https://github.com/proximax-storage/java-xpx-ipfs-api/blob/master/LICENSE) file for details.
