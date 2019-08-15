@@ -3,14 +3,17 @@
 
 # ProximaX IPFS Java API #
 
-A Java implementation of the IPFS HTTP API
+A Java implementation of the IPFS HTTP API client.
 
 ## ProximaX Forked Version
 
 This is a forked version of IPFS [java-ipfs-http-client](https://github.com/ipfs/java-ipfs-http-client) project.
 
-This is transitive dependency and is not primarily intended for direct use.
+This is transitive dependency and is not primarily intended for direct use. 
+Project [java-chain-xipfs-sdk](https://github.com/proximax-storage/java-chain-xipfs-sdk) should be used as P2P SDK.
 
 ## License
 
-[MIT](LICENSE)
+Project is licensed under MIT License. See [LICENSE](https://github.com/proximax-storage/java-xpx-ipfs-api/blob/master/LICENSE) file for details.
+
+<p align="right"><i><sub>Copyright (c) 2019 ProximaX Limited</sub></i></p>
